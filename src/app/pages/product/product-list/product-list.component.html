@@ -37,6 +37,70 @@
                             </ul>
                         </div>
                     </div>
+
+                    <div class="materialTableHeader custom-small-header">
+                        <div class="ml-3">
+                            <div class="row">
+                                <div class="box-filter">
+                                    <mat-form-field class="example-full-width my-custom-control custom-select" appearance="outline">
+                                        <mat-label class="filter-text-box">{{'Discount' |
+                                            translate}}</mat-label>
+                                        <mat-select id="gameStatusSelect" [formControl]="discountValue" (selectionChange)="onSelectDiscount($event.value)">
+                                            <mat-option value="lowest-discount"><span class="hide-checkbox">{{'Lowest Discount' | translate}}</span></mat-option>
+                                            <mat-option value="highest-discount"><span class="hide-checkbox">{{'Highest Discount' | translate}}</span></mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="box-filter" style="width: 220px;">
+                                    <mat-form-field appearance="outline" class="example-full-width">
+                                      <mat-label>{{ 'Date' | translate }}</mat-label>
+                                      <input matInput [matDatepicker]="picker" placeholder="Choose a date" [formControl]="dateControl">
+                                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                      <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                  </div>
+                                  
+
+                                <div class="box-filter">
+                                    <mat-form-field class="example-full-width my-custom-control custom-select" 
+                                        appearance="outline">
+                                        <mat-label class="filter-text-box">{{'Price' |
+                                            translate}}</mat-label>
+                                        <mat-select id="gameStatusSelect" >
+                                            <mat-option value="lowest-price"><span class="hide-checkbox">{{'lowest-price' | translate}}</span></mat-option>
+                                            <mat-option value="highest-price"><span class="hide-checkbox">{{'highest-price' | translate}}</span></mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+
+                                <div class="box-filter">
+                                    <mat-form-field class="example-full-width my-custom-control custom-select" 
+                                        appearance="outline">
+                                        <mat-label class="filter-text-box">{{'Discount' |
+                                            translate}}</mat-label>
+                                        <mat-select id="gameStatusSelect">
+                                            <mat-option value="lowest-discount"><span class="hide-checkbox">{{'Lowest Discount' | translate}}</span></mat-option>
+                                            <mat-option value="highest-discount"><span class="hide-checkbox">{{'Highest Discount' | translate}}</span></mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="box-search-filter">
+                                    <div class="box-submit-filter">
+                                      <button mat-mini-fab class="custom-search-button">
+                                        <mat-icon class="custom-search-icon">search</mat-icon>
+                                      </button>
+                                      <button mat-mini-fab class="ml-1 custom-search-button">
+                                        <mat-icon class="custom-search-icon">restart_alt</mat-icon>
+                                      </button>
+                                    </div>
+                                  </div>
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-body body overflow-auto">
                         <div class="responsive_table">
                             <table class="table sortable table-list">
@@ -59,7 +123,8 @@
                                         </th>
                                         <td class="text-center">
                                             <div class="box_show_img">
-                                                <img *ngIf="data.thumbnail != null" class="table-img" [src]="data.thumbnail">
+                                                <img *ngIf="data.thumbnail != null" class="table-img"
+                                                    [src]="data.thumbnail">
                                             </div>
                                         </td>
                                         <td>{{data.name}}</td>
@@ -69,15 +134,13 @@
                                         <td class="text-end">{{data.inStock}}</td>
                                         <td class="text-center">
                                             <button container="body" (click)="openForm('edit',data)"
-                                                matTooltipPosition="above" 
-                                                matTooltip="{{'Edit' | translate}}" mat-mini-fab color="primary"
-                                                class="btn-tbl-edit table-btn">
+                                                matTooltipPosition="above" matTooltip="{{'Edit' | translate}}"
+                                                mat-mini-fab color="primary" class="btn-tbl-edit table-btn">
                                                 <mat-icon aria-label="Edit" class="col-white">edit</mat-icon>
                                             </button>
                                             <button container="body" matTooltipPosition="above"
-                                                matTooltip="{{'Delete' | translate}}" 
-                                                (click)="askingDelete(data)" mat-mini-fab
-                                                class="btn-tbl-delete table-btn">
+                                                matTooltip="{{'Delete' | translate}}" (click)="askingDelete(data)"
+                                                mat-mini-fab class="btn-tbl-delete table-btn">
                                                 <mat-icon aria-label="Edit" class="col-white">delete</mat-icon>
                                             </button>
                                         </td>

@@ -1,0 +1,44 @@
+
+
+.custom-small-header.materialTableHeader .box-filter {
+    width: 170px;
+    font-size: 12px;
+
+    .custom-select{
+        width: 100%;
+    }
+}
+
+
+.hide-checkbox {
+    font-size: 12px;
+}
+
+/* Custom search button styles */
+.box-search-filter{
+    width: 90px;
+
+    .custom-search-button {
+        background-color: #3f51b5; 
+        border: none;
+        border-radius: 100%;
+        cursor: pointer;
+        position: relative;
+        width: 28px;
+        height: 28px;
+      }
+      .custom-search-button:disabled{
+        background-color: #3f51b57a;
+      }
+      .custom-search-icon {
+        color: white; 
+        font-size: 14px; 
+        position: absolute;
+        top: 7px;
+        left: 2px;
+      }
+      
+      .custom-search-button:hover {
+        background-color: #303f9f; 
+      }
+}
