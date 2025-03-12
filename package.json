@@ -33,6 +33,7 @@
     "@fullcalendar/interaction": "^6.1.7",
     "@fullcalendar/list": "^6.1.7",
     "@fullcalendar/timegrid": "^6.1.7",
+    "@mdi/font": "^7.4.47",
     "@ngx-loading-bar/core": "^6.0.2",
     "@ngx-loading-bar/router": "^6.0.2",
     "@ngx-translate/core": "^14.0.0",

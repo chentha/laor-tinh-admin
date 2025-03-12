@@ -14,6 +14,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   baseApi = environment.baseAPI; 
+  token: any;
 
   constructor(private http: HttpClient, private router:Router, private allFunction: GeneralFunctionService) {
     this.currentUserSubject = new BehaviorSubject<User>(
@@ -28,6 +29,16 @@ export class AuthService {
 
   login(data: any, option:any) {
     return this.http.post(this.baseApi+'api/auth/login', data, option);
+  }
+
+
+  getToken() {
+    if (localStorage.getItem('token')) {
+        this.token = localStorage.getItem('token');
+    } else {
+        this.token = null;
+    }
+    return this.token;
   }
 
   logout() {

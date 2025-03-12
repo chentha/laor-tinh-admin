@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'app/core/service/auth.service';
 import { environment } from 'environments/environment';
+import { TokenService } from './../../core/service/token.service';
 
 @Component({
   selector: 'app-signin',
@@ -37,6 +38,7 @@ export class SigninComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private tokenService: TokenService
   ) {
 
     // if (this.authService.isAuthenticated()) {
@@ -90,6 +92,7 @@ export class SigninComponent implements OnInit {
             // const encryptedPermission = this.generalService.encryptFileForLocal(this.keyEncrypt, permission);
             this.token = data.data.accessToken;
             this.user = data.data.user;
+            this.tokenService.setValue(this.token)
             localStorage.setItem('user', JSON.stringify(this.user))
             localStorage.setItem('token', this.token)
           

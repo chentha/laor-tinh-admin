@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { AllService } from '@core/service/allApi.service';
@@ -7,6 +7,8 @@ import { NGXToastrService } from '@core/service/toast.service';
 import swal from 'sweetalert2';
 import { ProductFormComponent } from '../product-form/product-form.component';
 import { FormControl } from '@angular/forms';
+import { FilterService } from '../../../core/service/filter.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-product-list',
@@ -26,8 +28,13 @@ export class ProductListComponent {
   backupData: any;
   AppName = '';
   discountValue = new FormControl('');
-  dateControl  = new FormControl('');
-  statusValue = new FormControl('');
+  priceValue  = new FormControl('');
+  dateValue = new FormControl('');
+  treadValue = new FormControl('');
+  ValueFilter: { [key: string]: any } = {};
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
 
   constructor(
     public httpClient: HttpClient,
@@ -35,19 +42,26 @@ export class ProductListComponent {
     private toastSerivce: NGXToastrService,
     private allService: AllService,
     private allFunction: GeneralFunctionService, 
+    private filterService: FilterService
   ) { 
 
   }
 
   ngOnInit() {
-    // this.getDataList()
+    this.getDataList()
   }
 
   
+  // refresh() {
+  //   this.page = 1;
+  //   this.search_key = null
+  //   // this.getDataList()
+  // }
   refresh() {
     this.page = 1;
     this.search_key = null
-    // this.getDataList()
+    this.paginator.firstPage()
+    this.getDataList()
   }
 
   onSearch() {
@@ -73,68 +87,78 @@ export class ProductListComponent {
     // this.getDataList();
   }
 
-  onSelectDiscount(event: any) {
-    this.discountValue = event;
-    console.log('data duisocunrt', event)
-    // this.disabledFilter = event ? false : true;
+  discountSelect(){
+    const Date = this.discountValue.value;
+    this.ValueFilter['sortDiscount'] = Date;
   }
 
-  applyFilters() {
-    this.loadingGet = true;
+  DateRange() {
+    const Date = this.allFunction.formatDateFormat(this.dateValue.value);
+    console.log('strature format', Date)
+    if (this.dateValue.value) {
+      this.ValueFilter['filterDate'] = Date;
+      // this.disabledFilter = false;
+    }
+  }
 
+  priceSelect(){
+    const Date = this.priceValue.value;
+    this.ValueFilter['sortPrice'] = Date;
+  }
+
+  filterSelect(){
+    const Date = this.priceValue.value;
+    this.ValueFilter['sortPrice'] = Date;
+  }
+
+  applyValueFilter() {
+    this.DateRange();
+    this.discountSelect();
+    this.priceSelect();
+    this.filterSelect();
+    Object.keys(this.ValueFilter).forEach(filterType => {
+      this.filterService.setFilter(filterType);
+    });
+    this.getDataList();
+    // this.paginator.firstPage();
+  }
+
+  clearFilters() {
+    this.filterService.clearFilter();
+    this.ValueFilter = [];
+    this.discountValue.reset();
+    this.dateValue.reset();
+    this.priceValue.reset();
+    this.treadValue.reset();
+    this.paginator.firstPage();
+    this.getDataList();
+  }
+
+  getDataList() {
+    this.loadingGet = true;
     let filter = {
       page: this.page,
       size: this.page_size,
       keyword: this.search_key,
-      sortDiscount: this.discountValue.value,
-      filterDate: this.dateControl .value,
-      status: this.statusValue.value
-    };
-
-    console.log('Applied Filters:', filter);
-
-    this.allService.getAllDataWithFilter(this.allService.productUrl, filter).subscribe(
+      ...this.ValueFilter
+    }
+    this.allService.getAllDataProduct(this.allService.productUrl, filter).subscribe(
       (data: any) => {
         this.total_record = data.paging.total;
-        this.tableData = data.data.map((item: { index: any; }, index: number) => {
+        console.log('data category', data)
+        this.tableData = data['data'].map((item: { index: any; }, index: number) => {
           item.index = (this.page_size * (this.page - 1)) + (index + 1);
           return item;
         });
-
-        console.log('Filtered Data:', data);
+        console.log('data', data)
         this.loadingGet = false;
       },
       err => {
         this.loadingGet = false;
-        console.log('Error:', err);
+        console.log('err', err)
       }
-    );
+    )
   }
-
-  // getDataList() {
-  //   this.loadingGet = true;
-  //   let filter = {
-  //     page: this.page,
-  //     size: this.page_size,
-  //     keyword: this.search_key
-  //   }
-  //   this.allService.getAllDataWithFilter(this.allService.productUrl, filter).subscribe(
-  //     (data: any) => {
-  //       this.total_record = data.paging.total;
-  //       console.log('data category', data)
-  //       this.tableData = data['data'].map((item: { index: any; }, index: number) => {
-  //         item.index = (this.page_size * (this.page - 1)) + (index + 1);
-  //         return item;
-  //       });
-  //       console.log('data', data)
-  //       this.loadingGet = false;
-  //     },
-  //     err => {
-  //       this.loadingGet = false;
-  //       console.log('err', err)
-  //     }
-  //   )
-  // }
 
 
   openForm(type: 'add' | 'edit', data?: any) {

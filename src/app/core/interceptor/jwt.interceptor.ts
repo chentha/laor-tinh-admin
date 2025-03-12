@@ -10,6 +10,7 @@ import { AuthService } from '../service/auth.service';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { GeneralFunctionService } from '@core/service/general-function.service';
+import { TokenService } from './../service/token.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -17,23 +18,24 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
     private allFunction: GeneralFunctionService,
-    private auth: AuthService
+    private auth: AuthService,
+    private tokenService: TokenService
   ) {
-    this.token = localStorage.getItem('token')?.replace(/"/g, '') || null;
+    // this.token = this.auth.getToken()
+    // console.log('token', this.tokenService.getValue())
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
  
-    let authReq = req; // Start with the original request
+    let token = this.auth.getToken(); // Get the latest token dynamically
+    // console.log('token', token)
 
-    if (this.token) {
-      try {
-        authReq = req.clone({
-          headers: req.headers.set('Authorization', `Bearer ${this.token}`),
-        });
-      } catch (error) {
-        console.error('Token decryption failed:', error);
-      }
+    let authReq = req; // Start with the original request
+  
+    if (token) {
+      authReq = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`),
+      });
     } else {
       // If no token is present, use Basic Auth
       const username = environment.Username;
@@ -43,6 +45,7 @@ export class JwtInterceptor implements HttpInterceptor {
         headers: req.headers.set('Authorization', `Basic ${basicAuthCredentials}`),
       });
     }
+  
 
     // Fallback for default headers (if necessary)
     if (!authReq.headers.has('Authorization')) {

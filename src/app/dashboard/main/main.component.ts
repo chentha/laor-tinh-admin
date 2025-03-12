@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { AllService } from '@core/service/allApi.service';
+import { TokenService } from '../../core/service/token.service';
 
 import {
   ChartComponent,
@@ -16,6 +17,7 @@ import {
   ApexTooltip,
   ApexLegend,
 } from 'ng-apexcharts';
+import { take } from 'rxjs';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -69,30 +71,43 @@ export class MainComponent implements OnInit {
     },
   };
 
-  constructor(private allapi: AllService) {}
+  constructor(private allapi: AllService, private tokenServie:TokenService) {
+    // let tokenValue = localStorage.getItem('token');
+    // if(tokenValue){
+    //   this.tokenServie.setValue(tokenValue);
+    // }
+    
+  }
 
   ngOnInit() {
-    // Delay the call to getChartData by 5 seconds
-    setTimeout(() => {
-      this.getChartData();
-    }, 7000); // 5000 milliseconds = 5 seconds
+    this.getChartData();
+
   }
+  
   
 
   getChartData() {
-    this.allapi.getData(this.allapi.reportUrl).subscribe((response: any) => {
-      this.barChartOptions.series = [
-        {
-          name: 'Actual',
-          data: [
-            { x: 'Roles', y: response.data.totalRoles },
-            { x: 'Users', y: response.data.totalUsers },
-            { x: 'Price', y: response.data.totalPrice },
-            { x: 'Products', y: response.data.totalProducts },
-            { x: 'Orders', y: response.data.totalOrders },
-          ],
-        },
-      ];
+    this.allapi.getData(this.allapi.reportUrl).subscribe({
+      next: (response: any) => {
+        if (response && response.data) {
+          this.barChartOptions.series = [
+            {
+              name: 'Actual',
+              data: [
+                { x: 'Roles', y: response.data.totalRoles },
+                { x: 'Users', y: response.data.totalUsers },
+                { x: 'Price', y: response.data.totalPrice },
+                { x: 'Products', y: response.data.totalProducts },
+                { x: 'Orders', y: response.data.totalOrders },
+              ],
+            },
+          ];
+        }
+      },
+      error: (error) => {
+        console.error('API Error:', error);
+      },
     });
   }
+  
 }

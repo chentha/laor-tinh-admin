@@ -25,6 +25,38 @@ export class AllService {
     
     }
 
+    getAllDataProduct(url: any, filter?: any) {
+        let myParams = new HttpParams();
+
+        if (this.ValueFilter === 'sortDiscount') {
+            myParams = myParams.set('sortDiscount', filter);
+        }
+
+        if (this.ValueFilter === 'sortPrice') {
+            myParams = myParams.set('sortPrice', filter);
+        }
+
+        if (this.ValueFilter === 'filterDate') {
+            myParams = myParams.set('filterDate', filter);
+        }
+        
+        if (this.ValueFilter === 'filter') {
+            myParams = myParams.set('filter', filter);
+        }
+
+        //** condition work with array object */
+        if (filter) {
+            Object.keys(filter).forEach((key) => {
+                if (filter[key] != null && !Array.isArray(filter[key])) {
+                    myParams = myParams.set(key, filter[key]);
+                }
+            });
+        }
+
+        return this.http.get(this.baseApi + url, { params: myParams })
+    }
+
+
     getAllDataWithFilter(url: any, filter: any) {
         let myParams = new HttpParams()
         if (filter) {
