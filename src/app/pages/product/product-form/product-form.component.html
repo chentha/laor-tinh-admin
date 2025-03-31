@@ -56,7 +56,7 @@
                         class="example-full-width my-custom-control">
                         <mat-label>{{ 'Category' | translate }}</mat-label>
                         <mat-select formControlName="categoryId">
-                            <mat-option style="font-size: 12px;" *ngFor="let cate of cateList" [value]="cate.id">
+                            <mat-option style="font-size: 12px;" *ngFor="let cate of cateList" [value]="cate.name">
                                 {{ cate.name }}
                             </mat-option>
                         </mat-select>

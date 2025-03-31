@@ -50,11 +50,11 @@ export class MainComponent implements OnInit {
   public barChartOptions: Partial<ChartOptions> = {
     series: [],
     chart: {
-      height: 400,
-      type: 'bar',
+      height: 320,
+      type: 'area',
       foreColor: '#9aa0ac',
     },
-    colors: ['#6973c6'],
+    colors: ['#0091ff'],
     plotOptions: {
       bar: {
         columnWidth: '60%',
@@ -89,19 +89,22 @@ export class MainComponent implements OnInit {
   getChartData() {
     this.allapi.getData(this.allapi.reportUrl).subscribe({
       next: (response: any) => {
-        if (response && response.data) {
-          this.barChartOptions.series = [
-            {
-              name: 'Actual',
-              data: [
-                { x: 'Roles', y: response.data.totalRoles },
-                { x: 'Users', y: response.data.totalUsers },
-                { x: 'Price', y: response.data.totalPrice },
-                { x: 'Products', y: response.data.totalProducts },
-                { x: 'Orders', y: response.data.totalOrders },
-              ],
-            },
-          ];
+        if (response?.data) {
+          this.barChartOptions = {
+            ...this.barChartOptions,
+            series: [
+              {
+                name: 'Actual',
+                data: [
+                  { x: 'Roles', y: response.data.totalRoles ?? 0 },
+                  { x: 'Users', y: response.data.totalUsers ?? 0 },
+                  { x: 'Price', y: response.data.totalPrice ?? 0 },
+                  { x: 'Products', y: response.data.totalProducts ?? 0 },
+                  { x: 'Orders', y: response.data.totalOrders ?? 0 },
+                ],
+              },
+            ]
+          };
         }
       },
       error: (error) => {

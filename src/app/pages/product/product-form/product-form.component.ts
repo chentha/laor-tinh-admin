@@ -113,9 +113,11 @@ export class ProductFormComponent {
   setDataIntoForm() {
     this.f.name.setValue(this.importData.data.name)
     this.f.price.setValue(this.importData.data.unitPrice)
-    this.f.categoryId.setValue(this.importData.data.category.id)
+    this.f.categoryId.setValue(this.importData.data.categoryName)
     this.f.discount.setValue(this.importData.data.discount)
     this.f.description.setValue(this.importData.data.description)
+
+    console.log('data log ', this.importData.data.categoryName)
   }
 
   createData() {
@@ -182,14 +184,13 @@ export class ProductFormComponent {
         "name": this.f.name.value,
         "price": this.f.price.value,
         "discount": this.f.discount.value,
-        "categoryId": this.f.categoryId.value,
-        // "optionProducts": [
-        //   {
-        //     "name": this.f.nameColor.value,
-        //     "value": this.f.valueColor.value,
-        //     "thumbnail": "thumbnail.jpg"
-        //   }
-        // ],
+        "categoryId": this.importData.data.id,
+        "optionProducts": [
+          {
+            "name": this.f.nameColor.value,
+            "value": this.f.valueColor.value,
+          }
+        ],
         "description": this.f.description.value
       }
 
@@ -208,7 +209,7 @@ export class ProductFormComponent {
 
             this.allService.createData(this.allService.productUrl + '/' + this.importData.data.id + '/images', inputData).subscribe(
                 (imageData: any) => {
-                  this.ToastrService.typeSuccessCreate()
+                  this.ToastrService.typeSuccessEdit()
                   console.log("Image uploaded successfully", imageData);
                 },
                 (imageError: any) => {
@@ -216,7 +217,7 @@ export class ProductFormComponent {
                 }
               );
           } else {
-            this.ToastrService.typeSuccessCreate()
+            this.ToastrService.typeSuccessEdit()
           }
         },
         err => {
