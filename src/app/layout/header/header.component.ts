@@ -15,6 +15,10 @@ import {
   AuthService,
   RightSidebarService,
 } from '@core';
+import { UserProfileComponent } from 'app/pages/user-profile/user-profile.component';
+import swal from 'sweetalert2';
+import { GeneralFunctionService } from '@core/service/general-function.service';
+import { MatDialog } from '@angular/material/dialog';
 
 interface Notifications {
   message: string;
@@ -43,6 +47,8 @@ export class HeaderComponent
   isOpenSidebar?: boolean;
   docElement: HTMLElement | undefined;
   isFullScreen = false;
+  avatarUser:any;
+  allDataUser:any;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -52,7 +58,9 @@ export class HeaderComponent
     private configService: ConfigService,
     private authService: AuthService,
     private router: Router,
-    public languageService: LanguageService
+    public languageService: LanguageService,
+    private allFunction: GeneralFunctionService,
+    public dialog: MatDialog,
   ) {
     super();
  
@@ -129,6 +137,18 @@ export class HeaderComponent
     } else {
       this.flagvalue = val.map((element) => element.flag);
     }
+
+    this.loadDataUser()
+  }
+
+  loadDataUser(){
+    let profile = localStorage.getItem('user');
+    if(profile){
+      let dataUser = JSON.parse(profile)
+      this.allDataUser = dataUser
+      this.avatarUser = dataUser.avatar
+      console.log('data user', dataUser)
+    }
   }
 
   callFullscreen() {
@@ -172,6 +192,34 @@ export class HeaderComponent
     this.authService.logout()
   }
 
+
+  openForm(type: 'add' | 'edit', data?: any) {
+    let tmp_DialogData: any = {
+      size: "medium",
+      type: type,
+      form_name: 'user-form'
+    }
+    const dialogRef = this.dialog.open(UserProfileComponent,
+      this.allFunction.dialogData(
+        tmp_DialogData.size,
+        tmp_DialogData.type,
+        tmp_DialogData.form_name,
+        data
+      )
+    )
+    dialogRef.afterClosed().subscribe(
+      result => {
+        if (result) {
+          if (result.is_refresh) {
+            // this.getDataList();
+          }
+        }
+        console.log('close', result)
+      }
+    )
+  }
+
+  
   // logout() {
   //   this.subs.sink = this.authService.logout().subscribe((res) => {
   //     if (!res.success) {

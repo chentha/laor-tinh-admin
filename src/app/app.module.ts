@@ -48,6 +48,7 @@ import {
 } from 'angular-feather/icons';
 
 import { FeatherModule } from 'angular-feather';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -82,6 +83,7 @@ const icons = {
     ProductListComponent,
     OrderFormComponent,
     OrderListComponent,
+    UserProfileComponent
 
   ],
   imports: [

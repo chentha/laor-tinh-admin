@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'app/core/service/auth.service';
 import { environment } from 'environments/environment';
 import { TokenService } from './../../core/service/token.service';
+import { GeneralFunctionService } from '@core/service/general-function.service';
 
 @Component({
   selector: 'app-signin',
@@ -38,7 +39,8 @@ export class SigninComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private allFunction: GeneralFunctionService
   ) {
 
     // if (this.authService.isAuthenticated()) {
@@ -93,7 +95,7 @@ export class SigninComponent implements OnInit {
             this.token = data.data.accessToken;
             this.user = data.data.user;
             this.tokenService.setValue(this.token)
-            localStorage.setItem('user', JSON.stringify(this.user))
+            localStorage.setItem('user', (JSON.stringify(this.user)))
             localStorage.setItem('token', this.token)
           
             this.router.navigate(['dashboard/main'])

@@ -19,13 +19,13 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <!-- Full Screen Button -->
-        <li class="fullscreen">
+        <!-- <li class="fullscreen">
           <button mat-button class="nav-notification-icons" (click)="callFullscreen()">
             <app-feather-icons [icon]="'maximize'" [class]="'header-icon'"></app-feather-icons>
           </button>
-        </li>
+        </li> -->
         <!-- #END# Full Screen Button -->
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <button mat-button [matMenuTriggerFor]="languagemenu" class="lang-dropdown nav-notification-icons"> <img
               *ngIf="flagvalue !== undefined" src="{{flagvalue}}" height="16">
             <img *ngIf="flagvalue === undefined" src="{{defaultFlag}}" height="16"></button>
@@ -38,7 +38,7 @@
               </button>
             </div>
           </mat-menu>
-        </li>
+        </li> -->
         <!-- #START# Notifications-->
         <li class="nav-item" ngbDropdown>
           <button mat-button [matMenuTriggerFor]="notificationMenu" class="nav-notification-icons">
@@ -87,22 +87,22 @@
         <li class="nav-item user_profile">
           <button mat-button [matMenuTriggerFor]="profilemenu">
             <div class="chip dropdown-toggle" ngbDropdownToggle class="">
-              <img src="assets/images/user.jpg" class="rounded-circle" width="32" height="32" alt="User">
+              <img [src]="avatarUser" class="rounded-circle" width="32" height="32" alt="User">
             </div>
           </button>
           <mat-menu #profilemenu="matMenu" class="profile-menu">
             <div class="noti-list">
               <div class="menu ">
                 <div class="user_dw_menu">
-                  <button mat-menu-item>
+                  <button mat-menu-item (click)="openForm('edit', allDataUser)">
                     <app-feather-icons [icon]="'user'" [class]="'user-menu-icons'"></app-feather-icons>Account
                   </button>
-                  <button mat-menu-item>
+                  <!-- <button mat-menu-item>
                     <app-feather-icons [icon]="'mail'" [class]="'user-menu-icons'"></app-feather-icons>Inbox
                   </button>
                   <button mat-menu-item>
                     <app-feather-icons [icon]="'settings'" [class]="'user-menu-icons'"></app-feather-icons>Settings
-                  </button>
+                  </button> -->
                   <button mat-menu-item (click)="logout()">
                     <app-feather-icons [icon]="'log-out'" [class]="'user-menu-icons'"></app-feather-icons>Logout
                   </button>

@@ -32,20 +32,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'extra-pages',
-        loadChildren: () =>
-          import('./extra-pages/extra-pages.module').then(
-            (m) => m.ExtraPagesModule
-          ),
-      },
-      {
-        path: 'multilevel',
-        loadChildren: () =>
-          import('./multilevel/multilevel.module').then(
-            (m) => m.MultilevelModule
-          ),
-      },
-      {
         path: 'pages',
         loadChildren: () =>
           import('./pages/pages.module').then(
