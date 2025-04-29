@@ -25,10 +25,43 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     submenu: [],
   },
+  // {
+  //   path: '/pages/product',
+  //   title: 'MENUITEMS.PRODUCT.TEXT',
+  //   icon: 'Box', // Feather icon
+  //   class: '',
+  //   groupTitle: false,
+  //   submenu: [],
+  // },
   {
-    path: '/pages/product',
-    title: 'MENUITEMS.PRODUCT.TEXT',
-    icon: 'Box', // Feather icon
+    path: '',
+    title: 'Products',
+    icon: 'Box', 
+    class: 'menu-toggle',
+    groupTitle: false,
+    submenu: [
+      {
+        path: '/pages/product',
+        title: 'Product',
+        icon: 'Box',
+        class: 'ml-menu',
+        groupTitle: false,
+        submenu: [],
+      },
+      {
+        path: '/pages/favorite',
+        title: 'Favorite',
+        icon: 'Heart',
+        class: 'ml-menu',
+        groupTitle: false,
+        submenu: [],
+      }
+    ],
+  },
+  {
+    path: '/pages/order',
+    title: 'Carts',
+    icon: 'Box',
     class: '',
     groupTitle: false,
     submenu: [],
@@ -41,20 +74,57 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     submenu: [],
   },
+  
   {
-    path: '/pages/user',
-    title: 'MENUITEMS.USER.TEXT',
+    path: '',
+    title: 'User & Role',
     icon: 'User', 
-    class: '',
+    class: 'menu-toggle',
     groupTitle: false,
-    submenu: []
+    submenu: [
+      {
+        path: '/pages/user',
+        title: 'User',
+        icon: 'User',
+        class: 'ml-menu',
+        groupTitle: false,
+        submenu: [],
+      },
+      {
+        path: '/pages/role',
+        title: 'Role',
+        icon: 'Shield',
+        class: 'ml-menu',
+        groupTitle: false,
+        submenu: [],
+      }
+    ],
   },
+
   {
-    path: '/pages/role',
-    title: 'MENUITEMS.ROLE.TEXT',
-    icon: 'Shield', // Feather icon
-    class: '',
+    path: '',
+    title: 'User & Role',
+    icon: 'User', 
+    class: 'menu-toggle',
     groupTitle: false,
-    submenu: [],
+    submenu: [
+      {
+        path: '/pages/user',
+        title: 'User',
+        icon: 'User',
+        class: 'ml-menu',
+        groupTitle: false,
+        submenu: [],
+      },
+      {
+        path: '/pages/role',
+        title: 'Role',
+        icon: 'Shield',
+        class: 'ml-menu',
+        groupTitle: false,
+        submenu: [],
+      }
+    ],
   },
+
 ];

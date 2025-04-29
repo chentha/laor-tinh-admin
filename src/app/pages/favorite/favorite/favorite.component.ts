@@ -1,18 +1,19 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AllService } from '@core/service/allApi.service';
 import { GeneralFunctionService } from '@core/service/general-function.service';
 import { NGXToastrService } from '@core/service/toast.service';
 import swal from 'sweetalert2';
-import { OrderFormComponent } from '../order-form/order-form.component';
+import { OrderFormComponent } from 'app/pages/order/order-form/order-form.component';
+import { HttpClient } from '@angular/common/http';
+import { FavoriteFormComponent } from '../favorite-form/favorite-form.component';
 
 @Component({
-  selector: 'app-order-list',
-  templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.scss']
+  selector: 'app-favorite',
+  templateUrl: './favorite.component.html',
+  styleUrls: ['./favorite.component.scss']
 })
-export class OrderListComponent {
+export class FavoriteComponent {
   search_key: any;
   searchTimeout: any;
   tableData: any = [];
@@ -24,6 +25,7 @@ export class OrderListComponent {
   loadingRequest = false;
   backupData: any;
   AppName = '';
+  
 
   constructor(
     public httpClient: HttpClient,
@@ -69,17 +71,18 @@ export class OrderListComponent {
     this.getDataList();
   }
 
+
   getDataList() {
-    this.loadingGet = true;
+  this.loadingGet = true;
     let filter = {
       page: this.page,
       size: this.page_size,
       keyword: this.search_key
     }
-    this.allService.getAllDataWithFilter(this.allService.orderUrl, filter).subscribe(
+    this.allService.getAllDataWithFilter(this.allService.favoriteUrl, filter).subscribe(
       (data: any) => {
         this.total_record = data.paging.total;
-        console.log('data order', data)
+        console.log('data favorite', data)
         this.tableData = data['data'].map((item: { index: any; }, index: number) => {
           item.index = (this.page_size * (this.page - 1)) + (index + 1);
           return item;
@@ -99,9 +102,9 @@ export class OrderListComponent {
     let tmp_DialogData: any = {
       size: "medium",
       type: type,
-      form_name: 'order-form'
+      form_name: 'favorite-form'
     }
-    const dialogRef = this.dialog.open(OrderFormComponent,
+    const dialogRef = this.dialog.open(FavoriteFormComponent,
       this.allFunction.dialogData(
         tmp_DialogData.size,
         tmp_DialogData.type,
@@ -163,4 +166,5 @@ export class OrderListComponent {
       }
     );
   }
+
 }

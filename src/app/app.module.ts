@@ -37,7 +37,8 @@ import { ProductFormComponent } from './pages/product/product-form/product-form.
 import { ProductListComponent } from './pages/product/product-list/product-list.component';
 import { OrderFormComponent } from './pages/order/order-form/order-form.component';
 import { OrderListComponent } from './pages/order/order-list/order-list.component';
-import { ToastrModule } from 'ngx-toastr';;
+import { ToastrModule } from 'ngx-toastr';
+
 import { 
   Home, 
   Tag, 
@@ -49,6 +50,8 @@ import {
 
 import { FeatherModule } from 'angular-feather';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { FavoriteFormComponent } from './pages/favorite/favorite-form/favorite-form.component';
+import { FavoriteComponent } from './pages/favorite/favorite/favorite.component';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -83,8 +86,9 @@ const icons = {
     ProductListComponent,
     OrderFormComponent,
     OrderListComponent,
-    UserProfileComponent
-
+    UserProfileComponent,
+    FavoriteComponent,
+    FavoriteFormComponent
   ],
   imports: [
     BrowserModule,

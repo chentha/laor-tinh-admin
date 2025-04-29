@@ -18,6 +18,7 @@ export class AllService {
     roleUrl = 'api/roles'
     orderStatusUrl = 'api/orders/order-status/'
     reportUrl= 'api/reports';
+    favoriteUrl = 'api/favorites';
 
     constructor(
         private http: HttpClient,

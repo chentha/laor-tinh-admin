@@ -9,6 +9,17 @@ body {
     }
 }
 
+.n-badge-pill {
+    width: 70px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+
 .my-checkbox {
     padding-left: 5px;
 }
@@ -228,6 +239,7 @@ $search-result-height : 40px;
         }
     }
 }
+
 
 .mat-mdc-form-field-type-mat-select.my-custom-control.mat-mdc-form-field:not(.mat-form-field-disabled) {
     .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {

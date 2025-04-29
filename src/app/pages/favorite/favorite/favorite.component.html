@@ -7,7 +7,7 @@
                         <div class="left">
                             <ul class="header-buttons-left ms-0">
                                 <li class="tbl-title">
-                                    <h2 class="title">{{"Order" | translate}}</h2>
+                                    <h2 class="title">{{"Favorite" | translate}}</h2>
                                 </li>
                                 <li class="tbl-search-box">
                                     <label for="search-input"><i class="material-icons search-icon">search</i></label>
@@ -67,7 +67,7 @@
                                         <td> {{ data.location?.city }} </td>
                                         <td>{{ data.totalPrice | currency }}</td>
                                         <!-- <td class="text-center">{{ data.orderConstant }}</td> -->
-                                        <td class="text-center">
+                                        <!-- <td class="text-center">
                                             <div class="n-badge-pill text-white text-center font-size-12" [ngClass]="{
                                               'bg-success':data.orderConstant?.toLowerCase() === 'complete',
                                               'bg-danger':data.orderConstant?.toLowerCase() === 'reject',
@@ -76,7 +76,7 @@
                                             }">
                                                 {{ data.orderConstant.toLowerCase() }}
                                             </div>
-                                        </td>
+                                        </td> -->
                                         <td class="text-center">
                                             <button container="body" (click)="openForm('edit',data)"
                                                 matTooltipPosition="above" matTooltip="{{'Edit' | translate}}"
