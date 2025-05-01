@@ -4,9 +4,7 @@ import { AllService } from '@core/service/allApi.service';
 import { GeneralFunctionService } from '@core/service/general-function.service';
 import { NGXToastrService } from '@core/service/toast.service';
 import swal from 'sweetalert2';
-import { OrderFormComponent } from 'app/pages/order/order-form/order-form.component';
 import { HttpClient } from '@angular/common/http';
-import { FavoriteFormComponent } from '../favorite-form/favorite-form.component';
 
 @Component({
   selector: 'app-favorite',
@@ -41,6 +39,11 @@ export class FavoriteComponent {
     this.getDataList()
   }
 
+
+  onImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = 'assets/images/default-featured.png';
+  }
   
   refresh() {
     this.page = 1;
@@ -73,7 +76,7 @@ export class FavoriteComponent {
 
 
   getDataList() {
-  this.loadingGet = true;
+    this.loadingGet = true;
     let filter = {
       page: this.page,
       size: this.page_size,
@@ -98,40 +101,14 @@ export class FavoriteComponent {
   }
 
 
-  openForm(type: 'add' | 'edit', data?: any) {
-    let tmp_DialogData: any = {
-      size: "medium",
-      type: type,
-      form_name: 'favorite-form'
-    }
-    const dialogRef = this.dialog.open(FavoriteFormComponent,
-      this.allFunction.dialogData(
-        tmp_DialogData.size,
-        tmp_DialogData.type,
-        tmp_DialogData.form_name,
-        data
-      )
-    )
-    dialogRef.afterClosed().subscribe(
-      result => {
-        if (result) {
-          if (result.is_refresh) {
-            this.getDataList();
-          }
-        }
-        console.log('close', result)
-      }
-    )
-  }
-
-  askingDelete(data: any) {
+  askingEdit(data: any) {
     if (!this.loadingRequest) {
       let tmp_title = '';
       let tmp_message = '';
       if (localStorage.getItem('lang')) {
         if (localStorage.getItem('lang') == 'en') {
           tmp_title = 'Are you sure?'
-          tmp_message = "You want to delete this data?"
+          tmp_message = "You want to edit this data?"
         }
         if (localStorage.getItem('lang') == 'kh') {
           tmp_title = 'តេីអ្នកប្រាកដឬទេ?'
@@ -140,24 +117,24 @@ export class FavoriteComponent {
       }
       else {
         tmp_title = 'Are you sure?'
-        tmp_message = "You want to delete this data?"
+        tmp_message = "You want to edit this data?"
       }
-      swal.fire(this.allFunction.askingText('delete'))
+      swal.fire(this.allFunction.askingText('edit'))
         .then((result) => {
           console.log(result)
           if (result.value) {
-            this.deleteData(data.id);
+            this.edit(data.id);
           }
         });
     }
   }
 
   
-  deleteData(id: any) {
-    this.allService.deleteData(this.allService.productUrl +'/',id).subscribe(
+  edit(id: any) {
+    this.allService.editDataPatch(this.allService.favoriteUrl +'/', '', id).subscribe(
       data => {
         console.log('deleted data', data)
-        this.toastSerivce.typeSuccessDelete();
+        this.toastSerivce.typeSuccessEdit();
         this.refresh()
       },
       err => {

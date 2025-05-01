@@ -42,53 +42,43 @@
                             <table class="table sortable table-list">
                                 <thead>
                                     <tr>
-                                        <th width="30px" class="text-center">#</th>
-                                        <th width="100px">{{'Order Number' | translate}}</th>
-                                        <th width="100px">{{'Tracking Number' | translate}}</th>
-                                        <th width="100px">{{'Create By' | translate}}</th>
-                                        <th width="100px">{{'Contact Name' | translate}}</th>
-                                        <th width="70px">{{'Order Date' | translate}}</th>
-                                        <th width="70px">{{'Location' | translate}}</th>
+                                        <th width="20px" class="text-center">#</th>
+                                        <th width="60px" class="text-center">{{'Image' | translate }}</th>
+                                        <th width="100px">{{'Name' | translate}}</th>
+                                        <th width="80px">{{'Category' | translate}}</th>
+                                        <th width="80px">{{'Create By' | translate}}</th>
+                                        <th width="80px">{{'Create Date' | translate}}</th>
+                                        <th width="70px">{{'Discount' | translate}}</th>
                                         <th width="70px">{{'Price' | translate}}</th>
-                                        <th width="50px" class="text-center">{{'Status' | translate}}</th>
+                                        <th width="50px" class="text-center">{{'Favorite' | translate}}</th>
                                         <th width="60px" class="text-center"> {{'Action' | translate}} </th>
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="!loadingGet">
                                     <tr *ngFor="let data of tableData;let i = index">
-                                        <th width="10px" class="text-center" scope="row">
+                                        <th class="text-center" scope="row">
                                             {{ data.index }}
                                         </th>
-                                        <td>{{ data.orderNo }}</td>
-                                        <td>{{ data.trackingNumber }}</td>
-                                        <td>{{ data.createdBy }}</td>
-                                        <td class="text-overflow">{{data.contactName }}</td>
-                                        <td>{{ data.createdDate | date: 'dd-mm-yyyy' }}</td>
-                                        <td> {{ data.location?.city }} </td>
-                                        <td>{{ data.totalPrice | currency }}</td>
-                                        <!-- <td class="text-center">{{ data.orderConstant }}</td> -->
-                                        <!-- <td class="text-center">
-                                            <div class="n-badge-pill text-white text-center font-size-12" [ngClass]="{
-                                              'bg-success':data.orderConstant?.toLowerCase() === 'complete',
-                                              'bg-danger':data.orderConstant?.toLowerCase() === 'reject',
-                                              'bg-secondary':data.orderConstant?.toLowerCase() === 'pending' || data.orderConstant?.toLowerCase() === 'return',
-                                              'bg-info': data.orderConstant?.toLowerCase() === 'comfirm'
-                                            }">
-                                                {{ data.orderConstant.toLowerCase() }}
-                                            </div>
-                                        </td> -->
                                         <td class="text-center">
-                                            <button container="body" (click)="openForm('edit',data)"
+                                            <div class="box_show_img">
+                                                <img class="table-img"
+                                                    [src]="data.thumbnail || 'assets/images/default-featured.png'"
+                                                    (error)="onImageError($event)">
+                                            </div>
+                                        </td>
+                                        <td class="text-overflow">{{ data.name }}</td>
+                                        <td>{{ data.categoryName }}</td>
+                                        <td>{{ data.createdBy }}</td>
+                                        <td>{{ data.createdDate | date: 'dd-mm-yyyy' }}</td>
+                                        <td> {{ data.discount }} </td>
+                                        <td>{{ data.unitPrice | currency }}</td>
+                                        <td class="text-center">{{ data.favorite }}</td>
+                                        <td class="text-center">
+                                            <button container="body" (click)="askingEdit(data)"
                                                 matTooltipPosition="above" matTooltip="{{'Edit' | translate}}"
                                                 mat-mini-fab color="primary" class="btn-tbl-edit table-btn">
                                                 <mat-icon aria-label="Edit" class="col-white">edit</mat-icon>
                                             </button>
-                                            <!-- <button container="body" matTooltipPosition="above"
-                                                matTooltip="{{'Delete' | translate}}" 
-                                                (click)="askingDelete(data)" mat-mini-fab
-                                                class="btn-tbl-delete table-btn">
-                                                <mat-icon aria-label="Edit" class="col-white">delete</mat-icon>
-                                            </button> -->
                                         </td>
                                     </tr>
                                 </tbody>

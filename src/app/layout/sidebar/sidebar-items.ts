@@ -101,30 +101,30 @@ export const ROUTES: RouteInfo[] = [
     ],
   },
 
-  {
-    path: '',
-    title: 'User & Role',
-    icon: 'User', 
-    class: 'menu-toggle',
-    groupTitle: false,
-    submenu: [
-      {
-        path: '/pages/user',
-        title: 'User',
-        icon: 'User',
-        class: 'ml-menu',
-        groupTitle: false,
-        submenu: [],
-      },
-      {
-        path: '/pages/role',
-        title: 'Role',
-        icon: 'Shield',
-        class: 'ml-menu',
-        groupTitle: false,
-        submenu: [],
-      }
-    ],
-  },
+  // {
+  //   path: '',
+  //   title: 'User & Role',
+  //   icon: 'User', 
+  //   class: 'menu-toggle',
+  //   groupTitle: false,
+  //   submenu: [
+  //     {
+  //       path: '/pages/user',
+  //       title: 'User',
+  //       icon: 'User',
+  //       class: 'ml-menu',
+  //       groupTitle: false,
+  //       submenu: [],
+  //     },
+  //     {
+  //       path: '/pages/role',
+  //       title: 'Role',
+  //       icon: 'Shield',
+  //       class: 'ml-menu',
+  //       groupTitle: false,
+  //       submenu: [],
+  //     }
+  //   ],
+  // },
 
 ];

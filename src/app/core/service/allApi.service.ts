@@ -100,6 +100,11 @@ export class AllService {
         return this.http.put(this.finalBaseApi + url + id , data);
     }
 
+    editDataPatch(url: any, data: any, id: any) {
+        return this.http.patch(this.finalBaseApi + url + id , data);
+    }
+
+
     deleteData(url: any, id: any) {
         return this.http.delete(this.finalBaseApi + url + id )
     }

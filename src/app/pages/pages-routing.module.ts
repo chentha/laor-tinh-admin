@@ -7,7 +7,7 @@ import { RoleListComponent } from './user-role/role-list/role-list.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { ProductFormComponent } from './product/product-form/product-form.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
-import { FavoriteComponent } from './favorite/favorite/favorite.component';
+import { FavoriteComponent } from './product/favorite/favorite.component';
 
 const routes: Routes = [
   {

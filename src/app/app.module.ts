@@ -43,24 +43,29 @@ import {
   Home, 
   Tag, 
   Box, 
-  ShoppingBag, 
+  ShoppingCart, 
   User, 
   Shield 
 } from 'angular-feather/icons';
 
 import { FeatherModule } from 'angular-feather';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
-import { FavoriteFormComponent } from './pages/favorite/favorite-form/favorite-form.component';
-import { FavoriteComponent } from './pages/favorite/favorite/favorite.component';
+import { FavoriteFormComponent } from './pages/product/favorite-form/favorite-form.component';
+import { FavoriteComponent } from './pages/product/favorite/favorite.component';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { TabViewModule } from "primeng/tabview"; 
 
 const icons = {
   Home, 
   Tag, 
   Box, 
-  ShoppingBag, 
+  ShoppingCart, 
   User, 
   Shield 
 };
@@ -108,6 +113,11 @@ const icons = {
     ToastrModule.forRoot(),
     CoreModule,
     SharedModule,
+    MatChipsModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    TabViewModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

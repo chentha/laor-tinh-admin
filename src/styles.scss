@@ -1,5 +1,66 @@
 /* You can add global styles to this file, and also import other style files */
 
+// backgorund color 
+$p-bg-gradient : linear-gradient(90deg,#538d29 0,#68be50 90%)!important;
+$p-bg : #76bc21;
+$p-bg-light : #199cd845;
+$p-bg-hover : #84d225;
+// $p-bg-light: #F3F7F3; 
+$fill-gray : #F3F5F4;
+$bg-gray : #e6e9ed;
+$bg-gray-hover : #ced2d8;
+$bg-gray-light : #f8f9fa;
+
+$p-color-light: #ffffff;
+$p-color-dark: grey;
+
+$color-btn-add: #34c38f;
+
+
+//stepper
+$bg-stepper: #3dbdc9ae;
+
+
+// width 
+$content-width : 1600px;
+
+
+// text color 
+// $p-color : #03722e;
+$p-color2 : #199cd8;
+$p-color : #3dbdc9;
+$success-color : #34c38f;
+$warning-color: #f1b44d;
+$warning-color-hover:#ffa000;
+$my-link-color: #5795F7;
+$info-color : #50a5f1;
+$info-color-hover: #50caf1;
+$detail-color:#666666;
+$detail-light-color : #929baa;
+
+// $color-default: #142A4E;
+$color-default: $p-color2;
+$color-text-default: #ffffff99;
+//border
+$border-r : 15px;
+$border-color-gray : #dee2e6;
+$border-color-gray-light : #dee2e652;
+$border-colo-gray-dark : #9e9e9e;
+
+
+// font  
+$normal-font-size: 14px;
+$normal-line-height : 20px;
+
+
+// transition 
+$sidebar-trans-delay : 0.3s;
+
+
+
+// responsive scren 
+$screen-mobile: 767.98px;
+
 body {
     .btn {
         font-family: inherit;
@@ -17,6 +78,47 @@ body {
     display: flex;
     justify-content: center;
     margin: auto;
+}
+
+
+.my-p-tabview {
+    font-size: $normal-font-size;
+    line-height: $normal-line-height;
+
+    .p-tabview-nav-content {
+        .p-tabview-nav {
+            padding: 0;
+            margin-bottom: 0px;
+
+            li {
+                a {
+                    padding: 10px 20px;
+
+                    &.p-tabview-nav-link {
+                        font-weight: 400;
+                        color: $detail-color;
+                    }
+                }
+
+                &.p-highlight {
+                    .p-tabview-nav-link {
+                        color: $p-color;
+                        border-color: $p-color;
+                    }
+                }
+            }
+        }
+    }
+
+    .p-tabview-panels {
+        padding: 0px;
+    }
+
+    &.panel-padding {
+        .p-tabview-panels {
+            padding: 15px;
+        }
+    }
 }
 
 

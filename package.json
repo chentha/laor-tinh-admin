@@ -59,6 +59,8 @@
     "ngx-mask": "^15.1.3",
     "ngx-scrollbar": "^11.0.0",
     "ngx-toastr": "^19.0.0",
+    "primeicons": "^6.0.1",
+    "primeng": "^16.9.1",
     "rxjs": "~7.8.1",
     "simple-line-icons": "^2.5.5",
     "subsink": "^1.0.2",

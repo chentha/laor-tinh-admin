@@ -1,10 +1,11 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AllService } from '@core/service/allApi.service';
 import { GeneralFunctionService } from '@core/service/general-function.service';
 import { NGXToastrService } from '@core/service/toast.service';
 import { CategoryFormComponent } from 'app/pages/category/category-form/category-form.component';
+import { environment } from 'environments/environment.development';
 
 @Component({
   selector: 'app-product-form',
@@ -25,19 +26,33 @@ export class ProductFormComponent {
     name: new FormControl('', Validators.required),
     price: new FormControl('', Validators.required),
     discount: new FormControl(''),
-    categoryId: new FormControl(''),
-    nameColor: new FormControl(''),
-    valueColor: new FormControl(''),
+    categoryId: new FormControl('', Validators.required),
+    optionSizes: new FormControl(''),
+    optionColors: new FormControl(''),
     description: new FormControl(''),
-    quantity: new FormControl('')
+    quantity: new FormControl('', Validators.required)
   })
-  selectedImage: any;
+  selectedImage: any[] = [];
+  sizeArray: any[] = [];
+  colorArray: any[] = [];
+  uploadFiles: File[] = [];
+
+  allTab = ['Info Product', 'Image Product']
+  activeTab = [true, false]
+  activeIndex = 0;
+  documentData: any[] = [];
+  allSize: any[] = [];
+  allColor: any[] = [];
+  optionSizes: string[] = [];
+  optionColor: string[] = [];
+  url = environment.baseAPI
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dataDetail: any,
     public allFunction: GeneralFunctionService,
     private allService: AllService,
     private ToastrService: NGXToastrService,
+    private cdr: ChangeDetectorRef,
     public dialogRef: MatDialogRef<CategoryFormComponent>,
   ) {
     // get form type and url 
@@ -50,7 +65,7 @@ export class ProductFormComponent {
       this.importData = this.dataDetail.data
       this.getDataDetail()
       // console.log('data detial', this.importData)
-      this.getImageUrl(this.importData);
+      // this.getImageUrl(this.importData);
 
     }
   }
@@ -63,6 +78,89 @@ export class ProductFormComponent {
     return this.inputGroup.controls
   }
 
+
+  //size
+  onSizeChange(event: any) {
+    const sizeValue = this.inputGroup.get('optionSizes')?.value?.trim();
+    if (sizeValue) {
+      this.optionSizes.push(sizeValue);
+      this.inputGroup.get('optionSizes')?.setValue('');
+    }
+  }
+
+  removeSize(index: number) {
+    this.optionSizes.splice(index, 1);
+  }
+
+
+  //color
+  onColorChange(event: any) {
+    const colorValue = this.inputGroup.get('optionColors')?.value?.trim();
+    if (colorValue) {
+      this.optionColor.push(colorValue);
+      this.inputGroup.get('optionColors')?.setValue('');
+    }
+  }
+
+  removeColor(index: number) {
+    this.optionColor.splice(index, 1);
+  }
+
+
+
+  onFileChange(event: any): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImage = Array.from(input.files); 
+      this.processFiles(input.files);
+    }
+    // else {
+    //   this.isFileSelected = false;
+    // }
+  }
+
+  processFiles(files: FileList): void {
+    Array.from(files).forEach((file: File) => {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const fileData = {
+          document: e.target.result, // base64 or object URL
+          fileName: file.name,
+          owner: 'User',
+          status: 'pending',
+          progress: 0,
+          size: file.size,
+          formattedSize: this.formatFileSize(file.size),
+        };
+
+        console.log('data file', fileData)
+        this.documentData.push(fileData);
+        console.log('document data', this.documentData)
+      };
+
+      reader.readAsDataURL(file); // convert to base64
+    });
+  }
+
+  removeImage(index: number): void {
+    this.documentData.splice(index, 1);       // remove from preview array
+    this.selectedImage.splice(index, 1);     // remove from actual upload array
+  }
+
+
+
+  formatFileSize(size: number): string {
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    let unitIndex = 0;
+    while (size >= 1024 && unitIndex < units.length - 1) {
+      size /= 1024;
+      unitIndex++;
+    }
+    return `${size.toFixed(2)} ${units[unitIndex]}`;
+  }
+
+
   getAllCate() {
     this.allService.getAllData(this.allService.categoryUrl).subscribe(
       (data: any) => {
@@ -73,26 +171,22 @@ export class ProductFormComponent {
   }
 
 
+  tabChange(tab: any) {
+    this.activeTab[tab.index] = true;
+    // this.showUploadNewFile = true;
+    if (tab.index === 0) {
 
-  onImageSelected(event: any) {
-    const files = event.target.files;
-    if (files.length > 0) {
-      this.selectedImage = files[0];
-      this.getImageUrl({ thumbnail: this.selectedImage });
+    }
+    if (tab.index === 1) {
+
     }
   }
 
-  getImageUrl(slideShow: any) {
-    if (this.selectedImage) {
-      this.imageUrl = URL.createObjectURL(this.selectedImage);
-    } else {
-      if (slideShow.thumbnail) {
-        this.imageUrl = slideShow.thumbnail;
-      } else {
-        this.imageUrl = 'assets/images/no-image.jpg';
-      }
-    }
+  activeTabChang(tabInd: number) {
+    this.activeTab[tabInd] = false;
+    this.cdr.detectChanges();
   }
+
 
   getDataDetail() {
     this.loadingGet.push()
@@ -116,9 +210,16 @@ export class ProductFormComponent {
     this.f.categoryId.setValue(this.importData.data.categoryName)
     this.f.discount.setValue(this.importData.data.discount)
     this.f.description.setValue(this.importData.data.description)
+    this.f.quantity.setValue(this.importData.data.quantity)
+    this.documentData = this.importData.data?.images;
+    const optionProduct = this.importData.data.optionProducts?.[0];
+    this.optionSizes = optionProduct?.sizes;
+    this.optionColor = optionProduct?.colors;
 
-    console.log('data log ', this.importData.data.categoryName)
+    console.log('data log ', this.optionSizes)
   }
+
+  
 
   createData() {
     if (this.isValid()) {
@@ -129,13 +230,12 @@ export class ProductFormComponent {
         "discount": this.f.discount.value,
         "categoryId": this.f.categoryId.value,
         "quantity": this.f.quantity.value,
-        "optionProducts": [
-          {
-            "name": this.f.nameColor.value,
-            "value": this.f.valueColor.value,
-            "thumbnail": "thumbnail.jpg"
-          }
-        ],
+        "optionSizes": this.optionSizes.map(item => ({
+          value: item
+        })),
+        "optionColors": this.optionColor.map(item => ({
+          value: item
+        })),
         "description": this.f.description.value
       }
       console.log('json data', tmp_data)
@@ -150,21 +250,24 @@ export class ProductFormComponent {
           this.loaded();
           const ProdID = data.data.id;
 
-          if (this.selectedImage) {
+          if (this.selectedImage && this.selectedImage.length > 0) {
             const inputData = new FormData();
-            inputData.append("files", this.selectedImage);
-
-            this.allService.createData(this.allService.productUrl + '/' + ProdID + '/images', inputData).subscribe(
-                (imageData: any) => {
-                  this.ToastrService.typeSuccessCreate()
-                  console.log("Image uploaded successfully", imageData);
-                },
-                (imageError: any) => {
-                  console.error("Image upload failed", imageError);
-                }
-              );
+            
+            this.selectedImage.forEach((file: File) => {
+              inputData.append('files', file); // The key 'files' must match your backend
+            });
+          
+            this.allService.createData(`${this.allService.productUrl}/${ProdID}/images`, inputData).subscribe(
+              (imageData: any) => {
+                this.ToastrService.typeSuccessCreate();
+                console.log("Image uploaded successfully", imageData);
+              },
+              (imageError: any) => {
+                console.error("Image upload failed", imageError);
+              }
+            );
           } else {
-            this.ToastrService.typeSuccessCreate()
+            this.ToastrService.typeSuccessCreate();
           }
         },
         err => {
@@ -184,19 +287,23 @@ export class ProductFormComponent {
         "name": this.f.name.value,
         "price": this.f.price.value,
         "discount": this.f.discount.value,
-        "categoryId": this.importData.data.id,
-        "optionProducts": [
+        "categoryId": this.f.categoryId.value,
+        "quantity": this.f.quantity.value,
+        "optionSizes": [
           {
-            "name": this.f.nameColor.value,
-            "value": this.f.valueColor.value,
+            "value": this.f.optionSizes.value,
+          }
+        ],
+        "optionColors": [
+          {
+            "value": this.f.optionColors.value,
           }
         ],
         "description": this.f.description.value
       }
 
       console.log('data json test', tmp_data)
-
-      this.allService.editData(this.allService.productUrl+'/', tmp_data, this.importData.data.id).subscribe(
+      this.allService.editData(this.allService.productUrl + '/', tmp_data, this.importData.data.id).subscribe(
         data => {
           console.log('data', data);
           this.isRefreshTable = true;
@@ -205,17 +312,17 @@ export class ProductFormComponent {
 
           if (this.selectedImage) {
             const inputData = new FormData();
-            inputData.append("files", this.selectedImage);
+            // inputData.append("files", this.selectedImage);
 
             this.allService.createData(this.allService.productUrl + '/' + this.importData.data.id + '/images', inputData).subscribe(
-                (imageData: any) => {
-                  this.ToastrService.typeSuccessEdit()
-                  console.log("Image uploaded successfully", imageData);
-                },
-                (imageError: any) => {
-                  console.error("Image upload failed", imageError);
-                }
-              );
+              (imageData: any) => {
+                this.ToastrService.typeSuccessEdit()
+                console.log("Image uploaded successfully", imageData);
+              },
+              (imageError: any) => {
+                console.error("Image upload failed", imageError);
+              }
+            );
           } else {
             this.ToastrService.typeSuccessEdit()
           }

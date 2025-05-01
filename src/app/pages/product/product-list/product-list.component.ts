@@ -9,6 +9,7 @@ import { ProductFormComponent } from '../product-form/product-form.component';
 import { FormControl } from '@angular/forms';
 import { FilterService } from '../../../core/service/filter.service';
 import { MatPaginator } from '@angular/material/paginator';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-product-list',
@@ -32,7 +33,6 @@ export class ProductListComponent {
   dateValue = new FormControl('');
   treadValue = new FormControl('');
   ValueFilter: { [key: string]: any } = {};
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
@@ -57,6 +57,9 @@ export class ProductListComponent {
   //   this.search_key = null
   //   // this.getDataList()
   // }
+
+  
+  
   refresh() {
     this.page = 1;
     this.search_key = null
@@ -163,7 +166,7 @@ export class ProductListComponent {
 
   openForm(type: 'add' | 'edit', data?: any) {
     let tmp_DialogData: any = {
-      size: "medium",
+      size: "large",
       type: type,
       form_name: 'product-form'
     }

@@ -40,12 +40,18 @@
               "xlsx",
               "sweetalert2",
               "rfdc",
-              "bezier-easing"
+              "bezier-easing",
+              "moment"
             ],
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@fortawesome/fontawesome-free/webfonts",
+                "output": "assets/webfonts"
+              }
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",

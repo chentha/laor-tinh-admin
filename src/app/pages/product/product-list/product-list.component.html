@@ -105,7 +105,7 @@
                                 <thead>
                                     <tr>
                                         <th width="30px" class="text-center">#</th>
-                                        <th width="100px" class="text-center">{{'Image' | translate}}</th>
+                                        <th width="60px" class="text-center">Image</th>
                                         <th width="130px">{{'Name' | translate}}</th>
                                         <th width="60px">{{'Category' | translate}}</th>
                                         <th width="50px" class="text-end">{{'Price' | translate}}</th>
@@ -121,8 +121,12 @@
                                         </th>
                                         <td class="text-center">
                                             <div class="box_show_img">
-                                                <img *ngIf="data.thumbnail != null" class="table-img"
-                                                    [src]="data.thumbnail">
+                                                <img *ngIf="data.thumbnail == 'image'" class="table-img"
+                                                    src="../../../../assets/default-featured.png">
+                                                <img *ngIf="data.thumbnail != 'image'" class="table-img" [src]="data.thumbnail">
+                                                <!-- <img class="table-img"
+                                                    [src]="data?.thumbnail ? data?.thumbnail : 'assets/images/default-featured.png'"
+                                                    (error)="'assets/images/default-featured.png'"> -->
                                             </div>
                                         </td>
                                         <td>{{data.name}}</td>
