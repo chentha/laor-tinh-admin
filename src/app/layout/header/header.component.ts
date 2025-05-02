@@ -19,6 +19,7 @@ import { UserProfileComponent } from 'app/pages/user-profile/user-profile.compon
 import swal from 'sweetalert2';
 import { GeneralFunctionService } from '@core/service/general-function.service';
 import { MatDialog } from '@angular/material/dialog';
+import { AllService } from '@core/service/allApi.service';
 
 interface Notifications {
   message: string;
@@ -49,6 +50,8 @@ export class HeaderComponent
   isFullScreen = false;
   avatarUser:any;
   allDataUser:any;
+  dataNoti:any;
+  countNoti:any;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -61,6 +64,7 @@ export class HeaderComponent
     public languageService: LanguageService,
     private allFunction: GeneralFunctionService,
     public dialog: MatDialog,
+    private allService: AllService,
   ) {
     super();
  
@@ -138,7 +142,8 @@ export class HeaderComponent
       this.flagvalue = val.map((element) => element.flag);
     }
 
-    this.loadDataUser()
+    this.loadDataUser();
+    this.getNotifcation();
   }
 
   loadDataUser(){
@@ -149,6 +154,16 @@ export class HeaderComponent
       this.avatarUser = dataUser.avatar
       console.log('data user', dataUser)
     }
+  }
+
+
+  getNotifcation(){
+    this.allService.getAllData(this.allService.notificationUrl).subscribe(
+      (data:any) =>{
+        console.log('data noti', data);
+        this.dataNoti = data;
+      }
+    )
   }
 
   callFullscreen() {

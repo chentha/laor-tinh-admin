@@ -5,14 +5,20 @@ import { PaymentListComponent } from './payment/payment-list/payment-list.compon
 import { UserListComponent } from './user-role/user-list/user-list.component';
 import { RoleListComponent } from './user-role/role-list/role-list.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
-import { ProductFormComponent } from './product/product-form/product-form.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { FavoriteComponent } from './product/favorite/favorite.component';
+import { BannerListComponent } from './banner/banner-list/banner-list.component';
+import { ShippingListComponent } from './shipping/shipping-list/shipping-list.component';
+import { TrackingComponent } from './tracking/tracking.component';
 
 const routes: Routes = [
   {
     path: 'category',
-    component: CategoryListComponent
+    component: CategoryListComponent,
+  },
+  {
+    path: 'banner',
+    component: BannerListComponent,
   },
   {
     path: 'product',
@@ -37,6 +43,15 @@ const routes: Routes = [
   {
     path: 'role',
     component: RoleListComponent
+  },
+  {
+    path: 'shipping',
+    component: ShippingListComponent
+  }
+  ,
+  {
+    path: 'tracking',
+    component: TrackingComponent
   }
 ];
 

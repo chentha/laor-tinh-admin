@@ -56,7 +56,7 @@
                 <div class="noti-list header-menu">
                   <div class="menu">
                     <div>
-                      <button mat-menu-item *ngFor="let notification of notifications" onClick="return false;"
+                      <button mat-menu-item *ngFor="let notification of dataNoti" onClick="return false;"
                         [ngClass]="[notification.status]">
                         <span class="table-img msg-user ">
                           <i class="material-icons-two-tone nfc-type-icon"
@@ -83,6 +83,8 @@
             </div>
           </mat-menu>
         </li>
+
+        
         <!-- #END# Notifications-->
         <li class="nav-item user_profile">
           <button mat-button [matMenuTriggerFor]="profilemenu">

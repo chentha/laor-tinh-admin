@@ -30,15 +30,15 @@ export class ErrorInterceptor implements HttpInterceptor {
           // location.reload(true);
         }
         else if (err.status === 400 || err.status === 409 || err.status === 404){
-          // this.AllFunction.toastrService.typeErrorCreate();
+          this.AllFunction.toastrService.typeErrorCreate();
         } 
         else if (err.status === 500){
           // this.AllFunction.toastrService.typeErrorCreate()
-          // this.AllFunction.toastrService.typeError("Opp, something went wrong!, pls contact administrator",
-          // "Opp, something went wrong!, pls contact administrator");
+          this.AllFunction.toastrService.typeError("Opp, something went wrong!, pls contact administrator",
+          "Opp, something went wrong!, pls contact administrator");
         }
         else{
-          // this.AllFunction.toastrService.typeGenealError();
+          this.AllFunction.toastrService.typeGenealError();
         }
         
 

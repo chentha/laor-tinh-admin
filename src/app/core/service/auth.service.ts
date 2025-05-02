@@ -11,21 +11,19 @@ import { GeneralFunctionService } from './general-function.service';
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
   baseApi = environment.baseAPI; 
   token: any;
 
   constructor(private http: HttpClient, private router:Router, private allFunction: GeneralFunctionService) {
-    this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(localStorage.getItem('currentUser') || '{}')
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
+    // this.currentUserSubject = new BehaviorSubject<User>(
+    //   JSON.parse(localStorage.getItem('currentUser') || '{}')
+    // );
+    // this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): User {
-    return this.currentUserSubject.value;
-  }
+  // public get currentUserValue(): User {
+  //   return this.currentUserSubject.value;
+  // }
 
   login(data: any, option:any) {
     return this.http.post(this.baseApi+'api/auth/login', data, option);
@@ -39,6 +37,15 @@ export class AuthService {
         this.token = null;
     }
     return this.token;
+  }
+
+  isAuthenticated() {
+    if (!this.getToken()) {
+      // return true;
+      return false;
+    } else {
+      return true;
+    } 
   }
 
   logout() {

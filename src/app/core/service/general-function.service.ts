@@ -76,12 +76,11 @@ export class GeneralFunctionService {
     return tmp_data
   }
 
-  askingText(type: 'delete' | 'update' | 'create' | 'submit' | 'cancel' | 'edit' | 'disable' | 'enable') {
+  askingText(type: 'delete' | 'update' | 'create' | 'edit' | 'disable' | 'enable' | 'assign') {
     let deleteText = 'You want to delete this data?'
     let createText = 'You want to create this data?'
     let updateText = 'You want to update this data?'
-    let submitText = 'You want to submit this data?'
-    let cancelText = 'You want to cancel this data?'
+    let assignText = 'You want to assign this data?'
     let disableText = 'You want to disable this account?'
     let enableText = 'You want to enable this account?'
     let editText = 'You want to edit this data?'
@@ -104,8 +103,7 @@ export class GeneralFunctionService {
     if (type == 'delete') { tmp_text.text = deleteText }
     else if (type == 'update') { tmp_text.text = updateText }
     else if (type == 'create') { tmp_text.text = createText }
-    else if (type == 'submit') { tmp_text.text = submitText }
-    else if (type == 'cancel') { tmp_text.text = cancelText }
+    else if (type == 'assign') { tmp_text.text = assignText }   
     else if (type == 'disable') { tmp_text.text = disableText }
     else if (type == 'enable') { tmp_text.text = enableText }
     else if (type == 'edit') { tmp_text.text = editText }
@@ -115,8 +113,7 @@ export class GeneralFunctionService {
       if (type == 'delete') { tmp_text.text = deleteTextKh }
       else if (type == 'update') { tmp_text.text = updateTextKh }
       else if (type == 'create') { tmp_text.text = createTextKh }
-      else if (type == 'submit') { tmp_text.text = updateTextKh }
-      else if (type == 'cancel') { tmp_text.text = updateTextKh }
+      else if (type == 'assign') { tmp_text.text = assignText }   
       else if (type == 'disable') { tmp_text.text = disableTextKh }
       else if (type == 'enable') { tmp_text.text = enableTextKh }
       else if (type == 'edit') { tmp_text.text = updateTextKh }

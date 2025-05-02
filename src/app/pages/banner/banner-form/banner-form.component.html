@@ -1,0 +1,79 @@
+<div class="form-card">
+    <!-- header  -->
+    <div class="form-header">
+        <h5 class="title">
+            <span *ngIf="type == 'add'">{{"Create User" | translate}}</span>
+            <span *ngIf="type == 'edit'">{{"Edit User" | translate}}</span>
+        </h5>
+        <i class="fa fa-times close-icon" (click)="closeForm()"></i>
+    </div>
+
+    <!-- body  -->
+    <div class="form-body">
+        <div *ngIf="loadingGet.length != 0">
+
+            <h2 class="text-center">
+                <div class="lds-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </h2>
+        </div>
+        <form [class.hide]="loadingGet.length > 0" [formGroup]="inputGroup">
+
+            <div *ngIf="type == 'add'" class="row">
+                <div class="col-md-12">
+                    <div>
+                        <div class="box_image">
+                            <img class="box_show_image" [src]="imageUrl || url + imageUrl">
+                        </div>
+                        <div class="size-img-recommed"> ( 1076px X 360px )</div>
+                        <div class="box_choose_image mt-3">
+                            <label class="btn btn-primary">
+                                <i class="fas fa-upload"></i> {{'Upload Profile' | translate}}
+                                <input id="imageInput" type="file" accept="image/*" (change)="onImageSelected($event)"
+                                    style="display: none;">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="type == 'add'" class="row">
+                <div class="col-md-12">
+                    <mat-form-field class="example-full-width my-custom-control" appearance="outline">
+                        <mat-label>{{'Title' | translate}}</mat-label>
+                        <input matInput formControlName="title" type="text">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div *ngIf="type == 'edit'" class="row">
+                <div class="col-md-12">
+                    <label class="switch">
+                        <span class="me-4">Status : </span>
+                        <input class="checkBox" type="checkbox" formArrayName="isActive" checked>
+                        <span class="slider round"></span>
+                    </label>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+    <!-- footer  -->
+    <div class="form-footer">
+        <button [disabled]="!isValid()" (click)="createData()" type="button" class="btn btn-primary submit-btn"
+            *ngIf="type == 'add'">
+            {{'Save' | translate}}
+        </button>
+        <button [disabled]="!isValid()" (click)="editData()" type="button" class="btn btn-primary submit-btn"
+            *ngIf="type == 'edit'">
+            {{'Update' | translate}}
+        </button>
+    </div>
+</div>

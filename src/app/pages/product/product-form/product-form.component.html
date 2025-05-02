@@ -53,7 +53,7 @@
                                     <mat-label>{{ 'Category' | translate }}</mat-label>
                                     <mat-select formControlName="categoryId">
                                         <mat-option style="font-size: 12px;" *ngFor="let cate of cateList"
-                                            [value]="cate.id">
+                                            [value]="cate?.id">
                                             {{ cate.name }}
                                         </mat-option>
                                     </mat-select>
@@ -94,15 +94,17 @@
                                     </button>
                                 </div>
                             </div>
-    
+
                             <div class="col-md-12 mt-2">
                                 <div class="card-display">
-                                    <div class="row mb-2 box-display-size" *ngFor="let size of optionSizes; let i = index">
+                                    <div class="row mb-2 box-display-size"
+                                        *ngFor="let size of optionSizes; let i = index">
                                         <div class="col-md-10 d-flex align-items-center">
-                                            Value Size: {{ size }}
+                                            Value Size: {{ size.value || size }}
                                         </div>
                                         <div class="col-md-2 d-flex align-items-center">
-                                            <mat-icon (click)="removeSize(i)" style="cursor: pointer;" aria-label="Cancel" class="col-grey">cancel</mat-icon>
+                                            <mat-icon (click)="removeSize(i)" style="cursor: pointer;"
+                                                aria-label="Cancel" class="col-grey">cancel</mat-icon>
                                         </div>
                                     </div>
                                     <div class="text-center" *ngIf="optionSizes?.length === 0 || optionSizes === null">
@@ -110,7 +112,7 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                         </div>
 
                     </div>
@@ -159,15 +161,17 @@
                                     </button>
                                 </div>
                             </div>
-    
+
                             <div class="col-md-12 mt-2">
                                 <div class="card-display">
-                                    <div class="row mb-2 box-display-size" *ngFor="let color of optionColor; let i = index">
+                                    <div class="row mb-2 box-display-size"
+                                        *ngFor="let color of optionColor; let i = index">
                                         <div class="col-md-10 d-flex align-items-center">
-                                            Value Color : {{ color }}
+                                            Value Color : {{ color.value || color }}
                                         </div>
                                         <div class="col-md-2 d-flex align-items-center">
-                                            <mat-icon (click)="removeSize(i)" style="cursor: pointer;" aria-label="Cancel" class="col-grey">cancel</mat-icon>
+                                            <mat-icon (click)="removeSize(i)" style="cursor: pointer;"
+                                                aria-label="Cancel" class="col-grey">cancel</mat-icon>
                                         </div>
                                     </div>
                                     <div class="text-center" *ngIf="optionColor?.length === 0 || optionSizes === null">
@@ -175,7 +179,7 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                         </div>
 
                     </div>
@@ -220,14 +224,19 @@
                                     <!-- <td class="text-end">{{data.inStock}}</td> -->
                                     <td class="text-center">
                                         <button container="body" matTooltipPosition="above"
-                                            matTooltip="{{'Delete' | translate}}" (click)="removeImage(i)"
-                                            mat-mini-fab class="btn-tbl-delete table-btn">
+                                            matTooltip="{{'Delete' | translate}}" (click)="removeImage(i)" mat-mini-fab
+                                            class="btn-tbl-delete table-btn">
                                             <mat-icon aria-label="Edit" class="col-white">delete</mat-icon>
                                         </button>
                                     </td>
                                 </tr>
+
                             </tbody>
+
                         </table>
+                        <div class="text-center mt-4" *ngIf="documentData.length <= 0 ">
+                            {{'No Data' | translate}}
+                        </div>
                     </div>
                 </div>
             </ng-template>

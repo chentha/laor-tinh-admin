@@ -1,18 +1,18 @@
 import { RouteInfo } from './sidebar.metadata';
-import { 
-  Home, 
-  Tag, 
-  Box, 
-  ShoppingCart, 
-  User, 
-  Shield 
-} from 'angular-feather/icons'; // Import Feather icons
 
 export const ROUTES: RouteInfo[] = [
   {
     path: '/dashboard/main',
     title: 'MENUITEMS.DASHBOARD.TEXT',
     icon: 'Home', // Feather icon
+    class: '',
+    groupTitle: false,
+    submenu: [],
+  },
+  {
+    path: '/pages/banner',
+    title: 'Banner',
+    icon: 'Image',
     class: '',
     groupTitle: false,
     submenu: [],
@@ -25,25 +25,18 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     submenu: [],
   },
-  // {
-  //   path: '/pages/product',
-  //   title: 'MENUITEMS.PRODUCT.TEXT',
-  //   icon: 'Box', // Feather icon
-  //   class: '',
-  //   groupTitle: false,
-  //   submenu: [],
-  // },
+
   {
     path: '',
     title: 'Products',
-    icon: 'Box', 
+    icon: 'Clipboard', 
     class: 'menu-toggle',
     groupTitle: false,
     submenu: [
       {
         path: '/pages/product',
         title: 'Product',
-        icon: 'Box',
+        icon: 'Clipboard',
         class: 'ml-menu',
         groupTitle: false,
         submenu: [],
@@ -58,18 +51,11 @@ export const ROUTES: RouteInfo[] = [
       }
     ],
   },
-  {
-    path: '/pages/order',
-    title: 'Carts',
-    icon: 'Box',
-    class: '',
-    groupTitle: false,
-    submenu: [],
-  },
+
   {
     path: '/pages/order',
     title: 'MENUITEMS.PAYMENT.TEXT',
-    icon: 'Box',
+    icon: 'Package',
     class: '',
     groupTitle: false,
     submenu: [],
@@ -78,7 +64,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '',
     title: 'User & Role',
-    icon: 'User', 
+    icon: 'Shield', 
     class: 'menu-toggle',
     groupTitle: false,
     submenu: [
@@ -100,31 +86,22 @@ export const ROUTES: RouteInfo[] = [
       }
     ],
   },
-
-  // {
-  //   path: '',
-  //   title: 'User & Role',
-  //   icon: 'User', 
-  //   class: 'menu-toggle',
-  //   groupTitle: false,
-  //   submenu: [
-  //     {
-  //       path: '/pages/user',
-  //       title: 'User',
-  //       icon: 'User',
-  //       class: 'ml-menu',
-  //       groupTitle: false,
-  //       submenu: [],
-  //     },
-  //     {
-  //       path: '/pages/role',
-  //       title: 'Role',
-  //       icon: 'Shield',
-  //       class: 'ml-menu',
-  //       groupTitle: false,
-  //       submenu: [],
-  //     }
-  //   ],
-  // },
+  {
+    path: '/pages/shipping',
+    title: 'Shipping',
+    icon: 'Truck',
+    class: '',
+    groupTitle: false,
+    submenu: [],
+  },
+  {
+    path: '/pages/tracking',
+    title: 'Tracking',
+    icon: 'Monitor',
+    class: '',
+    groupTitle: false,
+    submenu: [],
+  },
+  
 
 ];

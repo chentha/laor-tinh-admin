@@ -43,8 +43,8 @@ export class ProductFormComponent {
   documentData: any[] = [];
   allSize: any[] = [];
   allColor: any[] = [];
-  optionSizes: string[] = [];
-  optionColor: string[] = [];
+  optionSizes: any[] = [];
+  optionColor: any[] = [];
   url = environment.baseAPI
 
   constructor(
@@ -210,7 +210,7 @@ export class ProductFormComponent {
     this.f.categoryId.setValue(this.importData.data.categoryName)
     this.f.discount.setValue(this.importData.data.discount)
     this.f.description.setValue(this.importData.data.description)
-    this.f.quantity.setValue(this.importData.data.quantity)
+    this.f.quantity.setValue(this.importData.data.inStock)
     this.documentData = this.importData.data?.images;
     const optionProduct = this.importData.data.optionProducts?.[0];
     this.optionSizes = optionProduct?.sizes;
@@ -289,16 +289,12 @@ export class ProductFormComponent {
         "discount": this.f.discount.value,
         "categoryId": this.f.categoryId.value,
         "quantity": this.f.quantity.value,
-        "optionSizes": [
-          {
-            "value": this.f.optionSizes.value,
-          }
-        ],
-        "optionColors": [
-          {
-            "value": this.f.optionColors.value,
-          }
-        ],
+        "optionSizes": this.optionSizes.map(item => ({
+          value: item?.value || item
+        })),
+        "optionColors": this.optionColor.map(item => ({
+          value: item?.value || item
+        })),
         "description": this.f.description.value
       }
 
@@ -310,9 +306,12 @@ export class ProductFormComponent {
           // this.ToastrService.typeSuccessEdit();
           this.loaded();
 
-          if (this.selectedImage) {
+          if (this.selectedImage && this.selectedImage.length > 0) {
             const inputData = new FormData();
-            // inputData.append("files", this.selectedImage);
+            
+            this.selectedImage.forEach((file: File) => {
+              inputData.append('files', file);
+            });
 
             this.allService.createData(this.allService.productUrl + '/' + this.importData.data.id + '/images', inputData).subscribe(
               (imageData: any) => {

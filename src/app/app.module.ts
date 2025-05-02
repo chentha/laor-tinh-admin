@@ -39,14 +39,30 @@ import { OrderFormComponent } from './pages/order/order-form/order-form.componen
 import { OrderListComponent } from './pages/order/order-list/order-list.component';
 import { ToastrModule } from 'ngx-toastr';
 
-import { 
-  Home, 
-  Tag, 
-  Box, 
-  ShoppingCart, 
-  User, 
-  Shield 
+import {
+  ShoppingCart,
+  Box,
+  Package,
+  Clipboard,
+  FileText,
+  CreditCard,
+  DollarSign,
+  Truck,
+  Send,
+  CheckCircle,
+  XCircle,
+  MapPin,
+  Navigation,
+  Compass,
+  Flag,
+  PlusCircle,
+  MinusCircle,
+  Settings,
+  Image, 
+  Monitor
 } from 'angular-feather/icons';
+
+
 
 import { FeatherModule } from 'angular-feather';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
@@ -60,14 +76,36 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TabViewModule } from "primeng/tabview"; 
+import { BannerListComponent } from './pages/banner/banner-list/banner-list.component';
+import { BannerFormComponent } from './pages/banner/banner-form/banner-form.component';
+import { ShippingFormComponent } from './pages/shipping/shipping-form/shipping-form.component';
+import { ShippingListComponent } from './pages/shipping/shipping-list/shipping-list.component';
+import { TrackingComponent } from './pages/tracking/tracking.component';
+
+
+export class YourModule {}
 
 const icons = {
-  Home, 
-  Tag, 
-  Box, 
-  ShoppingCart, 
-  User, 
-  Shield 
+  ShoppingCart,
+  Box,
+  Package,
+  Clipboard,
+  FileText,
+  CreditCard,
+  DollarSign,
+  Truck,
+  Send,
+  CheckCircle,
+  XCircle,
+  MapPin,
+  Navigation,
+  Compass,
+  Flag,
+  PlusCircle,
+  MinusCircle,
+  Settings,
+  Image, 
+  Monitor
 };
 
 @NgModule({
@@ -93,7 +131,12 @@ const icons = {
     OrderListComponent,
     UserProfileComponent,
     FavoriteComponent,
-    FavoriteFormComponent
+    FavoriteFormComponent,
+    BannerListComponent,
+    BannerFormComponent,
+    ShippingFormComponent,
+    ShippingListComponent,
+    TrackingComponent
   ],
   imports: [
     BrowserModule,

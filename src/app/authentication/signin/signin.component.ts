@@ -34,7 +34,6 @@ export class SigninComponent implements OnInit {
   logo: any;
   token: any;
   user:any;
-  keyEncrypt = environment.localEncriptKey;
 
   constructor(
     private router: Router,

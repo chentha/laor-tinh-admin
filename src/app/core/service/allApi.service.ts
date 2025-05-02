@@ -16,9 +16,20 @@ export class AllService {
     userUrl = 'api/users'
     orderUrl = 'api/orders'
     roleUrl = 'api/roles'
-    orderStatusUrl = 'api/orders/order-status/'
     reportUrl= 'api/reports';
     favoriteUrl = 'api/favorites';
+
+    //order status
+    orderStatusUrl = 'api/orders/order-status'
+
+    //banner
+    bannerUrl = 'api/banners'
+
+    //shipping
+    shippingUrl = 'api/shippings'
+
+    //Notification
+    notificationUrl = 'api/orders/notification'
 
     constructor(
         private http: HttpClient,
@@ -99,6 +110,15 @@ export class AllService {
     editData(url: any, data: any, id: any) {
         return this.http.put(this.finalBaseApi + url + id , data);
     }
+
+    assignDelivery(url: any, data?: any) {
+        return this.http.patch(this.finalBaseApi + url, data);
+    }
+
+    editOrder(url: any, id?: any, status?:any, data?: any) {
+        return this.http.put(this.finalBaseApi + url + id + '/' + status, data);
+    }
+
 
     editDataPatch(url: any, data: any, id: any) {
         return this.http.patch(this.finalBaseApi + url + id , data);

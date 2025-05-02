@@ -44,8 +44,8 @@
 
 .text_label {
     cursor: pointer;
-    color: #007bff;
-    font-size: 16px;
+    color: #007bff; 
+    font-size: 16px; 
 }
 
 .text_label i {
@@ -58,14 +58,10 @@
 
 
 //new updated
-.title {
+.title{
     font-size: 16px;
 }
-
-.example-full-width,
-label,
-.form-check-label,
-.form-footer {
+.example-full-width,label , .form-check-label, .form-footer{
     font-size: 12px;
 }
 
@@ -74,41 +70,8 @@ label,
     text-align: center;
 }
 
-
-.line {
-    border: 1px solid rgba(177, 175, 175, 0.693);
-    margin-top: 10px;
-}
-
-.preview-image {
-    width: 80px;
-    height: 40px;
-    border-radius: 5px;
-    border: 1px solid rgba(219, 215, 215, 0.618);
-}
-
-.form-control {
-    font-size: 12px;
-}
-
-.btn-success {
+.switch{
     display: flex;
     align-items: center;
-    height: 30px;
-    font-size: 12px;
-}
-
-.card-display {
-    padding: 10px;
-    background: #f8f9fa;
-    border-radius: 6px;
-}
-
-.badge {
-    display: flex;
-    align-items: center;
-}
-
-.box-display-size{
-    padding: 10px;
+    font-size: 14px;
 }

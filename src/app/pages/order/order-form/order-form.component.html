@@ -43,10 +43,6 @@
 
     <!-- footer  -->
     <div class="form-footer">
-        <!-- <button [disabled]="!isValid()" (click)="createData()" type="button" class="btn btn-primary submit-btn"
-            *ngIf="type == 'add'">
-            {{'Save' | translate}}
-        </button> -->
         <button [disabled]="!isValid()" (click)="editData()" type="button" class="btn btn-primary submit-btn"
             *ngIf="type == 'edit'">
             {{'Update' | translate}}

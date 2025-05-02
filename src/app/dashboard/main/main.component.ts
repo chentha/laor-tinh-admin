@@ -99,8 +99,11 @@ export class MainComponent implements OnInit {
                   { x: 'Roles', y: response.data.totalRoles ?? 0 },
                   { x: 'Users', y: response.data.totalUsers ?? 0 },
                   { x: 'Price', y: response.data.totalPrice ?? 0 },
+                  { x: 'Monthly Expenses', y: response.data.monthlyExpenses ?? 0 },
                   { x: 'Products', y: response.data.totalProducts ?? 0 },
+                  { x: 'Monthly Profit', y: response.data.monthlyProfit ?? 0 },
                   { x: 'Orders', y: response.data.totalOrders ?? 0 },
+                  { x: 'Monthly Income', y: response.data.monthlyIncome ?? 0 },
                 ],
               },
             ]

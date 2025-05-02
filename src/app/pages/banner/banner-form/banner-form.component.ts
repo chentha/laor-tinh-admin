@@ -4,31 +4,29 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AllService } from '@core/service/allApi.service';
 import { GeneralFunctionService } from '@core/service/general-function.service';
 import { NGXToastrService } from '@core/service/toast.service';
-import { CategoryFormComponent } from '../category/category-form/category-form.component';
+import { CategoryFormComponent } from 'app/pages/category/category-form/category-form.component';
+import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  selector: 'app-banner-form',
+  templateUrl: './banner-form.component.html',
+  styleUrls: ['./banner-form.component.scss']
 })
-export class UserProfileComponent {
+export class BannerFormComponent {
   type: any;
   importData: any;
   loadingGet = []
   loadingSubmit = false;
   isRefreshTable = false;
-  // imageUrl: string = '';
   imageUrl: string | null = 'assets/images/no-image.png';
-  cateList: any;
-  allRole:any;
+  roleList: any;
+  selectedImage: any;
+  url = environment.baseAPI;
 
   inputGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
-    gender: new FormControl('', Validators.required),
-    roleId: new FormControl(''),
+    title: new FormControl('', Validators.required),
+    isActive: new FormControl('')
   })
-  selectedImage: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dataDetail: any,
@@ -45,28 +43,20 @@ export class UserProfileComponent {
     }
     else if (this.type == 'edit') {
       this.importData = this.dataDetail.data
-      this.getDataDetail()
-      // console.log('data detial', this.importData)
-      this.getImageUrl(this.importData);
+      // this.getDataDetail()
 
+      console.log(this.importData.thumbnail)
+
+      this.setDataIntoForm()
     }
   }
 
   ngOnInit() {
-    this.getRole()
+
   }
 
   get f() {
     return this.inputGroup.controls
-  }
-
-  getRole(){
-    this.allService.getAllData(this.allService.roleUrl).subscribe(
-      (data:any) =>{
-        console.log('role:', data);
-        this.allRole = data.data;
-      }
-    )
   }
 
 
@@ -74,7 +64,7 @@ export class UserProfileComponent {
     const files = event.target.files;
     if (files.length > 0) {
       this.selectedImage = files[0];
-      this.getImageUrl({ avatar: this.selectedImage });
+      this.getImageUrl({ thumbnail: this.selectedImage });
     }
   }
 
@@ -82,57 +72,74 @@ export class UserProfileComponent {
     if (this.selectedImage) {
       this.imageUrl = URL.createObjectURL(this.selectedImage);
     } else {
-      if (slideShow.avatar) {
-        this.imageUrl = slideShow.avatar;
+      if (slideShow.thumbnail) {
+        this.imageUrl = slideShow.thumbnail;
       } else {
-        this.imageUrl = 'assets/images/no-image.jpg';
+        this.imageUrl = 'assets/images/no-image.png';
       }
     }
   }
 
-  getDataDetail() {
-    this.loadingGet.push()
-    this.allService.getDataById(this.allService.userUrl, '/' + this.importData.id).subscribe(
-      data => {
-        this.importData = data
-        this.setDataIntoForm()
-        this.loadingGet.pop()
-        console.log('data detail', data)
-      },
-      err => {
-        this.loadingGet.pop()
-        console.log('err', err)
-      }
-    );
-  }
+  // getDataDetail() {
+  //   this.loadingGet.push()
+  //   this.allService.getDataById(this.allService.bannerUrl, '/' + this.importData.id).subscribe(
+  //     data => {
+  //       this.importData = data
+  //       this.setDataIntoForm()
+  //       this.loadingGet.pop()
+  //       console.log('data detail', data)
+  //     },
+  //     err => {
+  //       this.loadingGet.pop()
+  //       console.log('err', err)
+  //     }
+  //   );
+  // }
+
 
   setDataIntoForm() {
-    this.f.name.setValue(this.importData.data.name)
-    this.f.email.setValue(this.importData.data.email)
-    this.f.gender.setValue(this.importData.data.gender)
-    this.f.roleId.setValue(this.importData.data.role.id)
+    this.f.title.setValue(this.importData.title);
+    this.getImageUrl(this.importData);
+  }
 
-    console.log('data log ', this.importData.data.categoryName)
+  createData() {
+    if (this.isValid()) {
+      this.loading()
+      const inputData = new FormData(); 
+      inputData.append('title', this.f.title.value || '');
+
+      console.log('json data', inputData)
+
+      if(this.selectedImage){
+        inputData.append('thumbnail', this.selectedImage);
+      }
+      this.allService.createData(this.allService.bannerUrl, inputData).subscribe(
+        (data: any) => {
+          console.log('data', data)
+          this.isRefreshTable = true;
+          this.ToastrService.typeSuccessCreate()
+          this.loaded();
+  
+        },
+        err => {
+          this.ToastrService.typeErrorCreate()
+          console.log('err', err)
+          this.loaded()
+        }
+      )
+    }
   }
 
 
   editData() {
     if (this.isValid()) {
       this.loading();
-      const tmp_data = new FormData(); 
-      tmp_data.append('name', this.f.name.value || '');
-      tmp_data.append('email', this.f.email.value || '');
-      tmp_data.append('gender', this.f.gender.value || '');
-      tmp_data.append('roleId', this.f.roleId.value || '');
-
-      if(this.selectedImage){
-        tmp_data.append('avatar', this.selectedImage);
+      let inputData = {
+        "isActive": this.f.isActive.value
       }
-      console.log('data json test', tmp_data)
-
-      this.allService.editData(this.allService.userUrl + '/', tmp_data, this.importData.data.id).subscribe(
+      this.allService.editDataPatch(this.allService.bannerUrl + '/', inputData, this.importData.id).subscribe(
         data => {
-          console.log('data', data);
+          console.log('data edit success', data);
           this.isRefreshTable = true;
           this.ToastrService.typeSuccessEdit();
           this.loaded();
@@ -145,6 +152,7 @@ export class UserProfileComponent {
       );
     }
   }
+
 
   isValid() {
     if (!this.inputGroup.valid || this.loadingSubmit || this.loadingGet.length > 0) {
@@ -171,5 +179,6 @@ export class UserProfileComponent {
       );
     }, this.allFunction.closeDelaySmall);
   }
+
 
 }

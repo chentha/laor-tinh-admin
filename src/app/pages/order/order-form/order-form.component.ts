@@ -20,9 +20,10 @@ export class OrderFormComponent {
   // imageUrl: string = '';
   imageUrl: string | null = 'assets/images/no-image.png';
   statusOrder: { value: string, label: string }[] = [
-    { value: 'ACCEPT', label: 'ACCEPT' },
-    { value: 'REJECT', label: 'REJECT' },
-    { value: 'PENDING', label: 'PENDING' }
+    { value: 'reject', label: 'Reject' },
+    { value: 'comfirm', label: 'Comfirm' },
+    { value: 'complete', label: 'Complete' },
+    { value: 'return', label: 'Return' }
   ];
 
   inputGroup = new FormGroup({
@@ -84,17 +85,16 @@ export class OrderFormComponent {
   }
 
   setDataIntoForm(){
-    this.f.orderStatus.setValue(this.importData.data.orderConstant)
+    this.f.orderStatus.setValue(this.importData.data.orderConstant.toLowerCase());
   }
 
   editData() {
     if (this.isValid()) {
       this.loading();
-      const tmp_data = {
-        orderStatus: this.f.orderStatus.value
-      }
+      const tmp_data = this.f.orderStatus.value
+      console.log('tmp data', tmp_data)
 
-      this.allService.editData(this.allService.orderStatusUrl+'/', tmp_data, this.importData.data.id).subscribe(
+      this.allService.editOrder(this.allService.orderStatusUrl + '/', this.importData.data.id, tmp_data).subscribe(
         data => {
           console.log('data', data);
           this.isRefreshTable = true;
