@@ -63,16 +63,16 @@
                                         <td>{{ data.trackingNumber }}</td>
                                         <td>{{ data.createdBy }}</td>
                                         <td class="text-overflow">{{data.contactName }}</td>
-                                        <td>{{ data.createdDate | date: 'dd-mm-yyyy' }}</td>
+                                        <td>{{ data.createdDate | date: 'dd-MM-yyyy' }}</td>
                                         <td> {{ data.location?.city }} </td>
                                         <td>{{ data.totalPrice | currency }}</td>
                                         <!-- <td class="text-center">{{ data.orderConstant }}</td> -->
                                         <td class="text-center">
-                                            <div class="n-badge-pill text-white text-center font-size-12" [ngClass]="{
+                                            <div class="n-badge-pill text-white text-center font-size-11" [ngClass]="{
                                               'bg-success':data.orderConstant?.toLowerCase() === 'complete',
                                               'bg-danger':data.orderConstant?.toLowerCase() === 'reject',
                                               'bg-secondary':data.orderConstant?.toLowerCase() === 'pending' || data.orderConstant?.toLowerCase() === 'return',
-                                              'bg-info': data.orderConstant?.toLowerCase() === 'comfirm'
+                                              'bg-info': data.orderConstant?.toLowerCase() === 'confirmed'
                                             }">
                                                 {{ data.orderConstant.toLowerCase() }}
                                             </div>

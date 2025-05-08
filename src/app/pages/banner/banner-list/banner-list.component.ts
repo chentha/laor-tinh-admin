@@ -156,6 +156,7 @@ export class BannerListComponent {
       data => {
         this.toastSerivce.typeSuccessDelete();
         this.refresh()
+        this.getDataList()
       },
       err => {
         this.toastSerivce.typeErrorDelete();
