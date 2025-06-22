@@ -254,7 +254,7 @@ export class ProductFormComponent {
             const inputData = new FormData();
             
             this.selectedImage.forEach((file: File) => {
-              inputData.append('files', file); // The key 'files' must match your backend
+              inputData.append('files', file); 
             });
           
             this.allService.createData(`${this.allService.productUrl}/${ProdID}/images`, inputData).subscribe(

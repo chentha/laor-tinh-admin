@@ -54,7 +54,7 @@
                                             {{ data.index }}
                                         </th>
                                         <td class="text-overflow">{{data.name}}</td>
-                                        <td>{{data.createdDate}}</td>
+                                        <td>{{ data.createdDate | date: 'dd-MM-yyyy' }}</td>
                                         <td class="text-center">
                                             <button container="body" (click)="openForm('edit',data)"
                                                 matTooltipPosition="above" 

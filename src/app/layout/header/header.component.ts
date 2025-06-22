@@ -161,7 +161,7 @@ export class HeaderComponent
     this.allService.getAllData(this.allService.notificationUrl).subscribe(
       (data:any) =>{
         console.log('data noti', data);
-        this.dataNoti = data;
+        this.dataNoti = data.data;
       }
     )
   }

@@ -182,7 +182,7 @@ export class ProductListComponent {
       result => {
         if (result) {
           if (result.is_refresh) {
-            // this.getDataList();
+            this.getDataList();
           }
         }
         console.log('close', result)

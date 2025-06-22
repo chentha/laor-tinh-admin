@@ -56,16 +56,14 @@
                 <div class="noti-list header-menu">
                   <div class="menu">
                     <div>
-                      <button mat-menu-item *ngFor="let notification of dataNoti" onClick="return false;"
-                        [ngClass]="[notification.status]">
+                      <button mat-menu-item *ngFor="let notification of dataNoti" onClick="return false;">
                         <span class="table-img msg-user ">
-                          <i class="material-icons-two-tone nfc-type-icon"
-                            [ngClass]="[notification.color]">{{notification.icon}}</i>
+                          <i class="material-icons-two-tone nfc-type-icon"></i>
                         </span>
                         <span class="menu-info">
-                          <span class="menu-title">{{notification.message}}</span>
+                          <span class="menu-title" style="line-height: 20px;">{{notification.message}}</span>
                           <span class="menu-desc mt-2">
-                            <i class="material-icons">access_time</i> {{notification.time}}
+                            <i class="material-icons">access_time</i> {{notification.createdAt}}
                           </span>
                         </span>
                         <span class="nfc-close">

@@ -135,7 +135,7 @@ export class BannerFormComponent {
     if (this.isValid()) {
       this.loading();
       let inputData = {
-        "isActive": this.f.isActive.value
+        "isActive": this.f.isActive.value || false
       }
       this.allService.editDataPatch(this.allService.bannerUrl + '/', inputData, this.importData.id).subscribe(
         data => {
